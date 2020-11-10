@@ -1,0 +1,75 @@
+{
+  "coverage": "44.82%",
+  "expectCount": 58,
+  "actualCount": 26,
+  "files": {
+    "components/Dummy.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        1,
+        2,
+        4
+      ]
+    },
+    "components/HotspotsController.js": {
+      "expectCount": 8,
+      "actualCount": 5,
+      "undocumentLines": [
+        10,
+        31,
+        43
+      ]
+    },
+    "components/MagneticCtaController.js": {
+      "expectCount": 8,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        4,
+        5,
+        11,
+        14,
+        26,
+        38,
+        83
+      ]
+    },
+    "components/NavigationController.js": {
+      "expectCount": 16,
+      "actualCount": 13,
+      "undocumentLines": [
+        6,
+        42,
+        43
+      ]
+    },
+    "components/PortfolioListController.js": {
+      "expectCount": 16,
+      "actualCount": 7,
+      "undocumentLines": [
+        10,
+        60,
+        63,
+        68,
+        79,
+        95,
+        212,
+        224,
+        236
+      ]
+    },
+    "components/ThreeDPhotosController.js": {
+      "expectCount": 7,
+      "actualCount": 1,
+      "undocumentLines": [
+        5,
+        6,
+        7,
+        13,
+        16,
+        26
+      ]
+    }
+  }
+}

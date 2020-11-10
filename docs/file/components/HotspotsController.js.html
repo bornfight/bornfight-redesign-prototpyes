@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">components/HotspotsController.js | gulp4-boilerplate</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="frontend project template based on gulp, es6 and scss"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="gulp4-boilerplate"><meta property="twitter:description" content="frontend project template based on gulp, es6 and scss"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/components/Dummy.js~Dummy.html">Dummy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/components/HotspotsController.js~HotspotsController.html">HotspotsController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/components/MagneticCtaController.js~MagneticCtaController.html">MagneticCtaController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/components/NavigationController.js~NavigationController.html">NavigationController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/components/PortfolioListController.js~PortfolioListController.html">PortfolioListController</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/components/ThreeDPhotosController.js~ThreeDPhotosController.html">ThreeDPhotosController</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">components/HotspotsController.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as PIXI from &quot;pixi.js&quot;;
+import gsap from &quot;gsap&quot;;
+
+window.PIXI = PIXI;
+
+/**
+ * interactive portfolio list with webGL preview interaction powered by PIXI.js
+ */
+export default class HotspotsController {
+    constructor() {
+        /**
+         *
+         * @type {{hotspotText: string, hotspot: string, hotspotCircle: string, hotspotCanvasContainer: string, hotspotContainer: string}}
+         */
+        this.DOM = {
+            hotspotContainer: &quot;.js-hotspot-container&quot;,
+            hotspot: &quot;.js-hotspot&quot;,
+            hotspotCircle: &quot;.js-hotspot-circle&quot;,
+            hotspotText: &quot;.js-hotspot-text&quot;,
+        };
+
+        /**
+         *
+         * @returns {NodeListOf&lt;Element&gt;}
+         */
+        this.hotspotContainer = document.querySelectorAll(
+            this.DOM.hotspotContainer,
+        );
+    }
+
+    init() {
+        console.log(&quot;HotspotsController init()&quot;);
+
+        if (this.hotspotContainer !== null) {
+            this.hotspotLines();
+        } else {
+            console.error(
+                `${this.DOM.hotspotContainer} does not exist in the DOM!`,
+            );
+        }
+    }
+
+    hotspotLines() {
+        const lineColor = 0xb1b1b1;
+        const lineGradient = [&quot;#b1b1b1&quot;, &quot;#ffffff&quot;];
+        const lineEndingRadius = 2;
+
+        const gradientTexture = this.createGradientTexture(
+            lineGradient[0],
+            lineGradient[1],
+        );
+
+        for (let i = 0; i &lt; this.hotspotContainer.length; i++) {
+            const hotspots = this.hotspotContainer[i].querySelectorAll(
+                this.DOM.hotspot,
+            );
+
+            // CANVAS SIZE
+            const canvasWidth = this.hotspotContainer[i].clientWidth;
+            const canvasHeight = this.hotspotContainer[i].clientHeight;
+
+            // CREATE PIXI APPLICATION
+            const app = new PIXI.Application({
+                width: canvasWidth,
+                height: canvasHeight,
+                antialias: true,
+                transparent: true,
+                resolution: window.devicePixelRatio,
+                resizeTo: this.hotspotContainer[i],
+            });
+
+            // ADD CANVAS TO CANVAS WRAPPER ELEMENT
+            this.hotspotContainer[i].appendChild(app.view);
+
+            for (let i = 0; i &lt; hotspots.length; i++) {
+                const circle = hotspots[i].querySelector(
+                    this.DOM.hotspotCircle,
+                );
+                const text = hotspots[i].querySelector(this.DOM.hotspotText);
+
+                const line = new PIXI.Graphics();
+                line.alpha = 0;
+
+                app.stage.addChild(line);
+
+                app.ticker.add(() =&gt; {
+                    line.clear();
+                    line.beginFill(lineColor, 1);
+                    line.drawCircle(
+                        this.getElementPosition(circle)[0],
+                        this.getElementPosition(circle)[1],
+                        lineEndingRadius,
+                    );
+                    line.endFill();
+                    line.beginFill(lineColor, 1);
+                    line.drawCircle(
+                        this.getElementPosition(text)[0],
+                        this.getElementPosition(text)[1],
+                        lineEndingRadius,
+                    );
+                    line.endFill();
+                    line.moveTo(
+                        this.getElementPosition(circle)[0],
+                        this.getElementPosition(circle)[1],
+                    );
+                    line.lineStyle(1, lineColor, 1);
+                    line.lineTextureStyle({
+                        width: 1,
+                        texture: gradientTexture,
+                        color: 0xffffff,
+                    });
+                    line.lineTo(
+                        this.getElementPosition(text)[0],
+                        this.getElementPosition(text)[1],
+                    );
+                });
+
+                //hover
+                hotspots[i].addEventListener(&quot;mouseenter&quot;, () =&gt; {
+                    gsap.to(line, {
+                        alpha: 1,
+                        duration: 0.4,
+                        onComplete: () =&gt; {},
+                    });
+                });
+
+                hotspots[i].addEventListener(&quot;mouseleave&quot;, () =&gt; {
+                    gsap.to(line, {
+                        alpha: 0,
+                        duration: 0.4,
+                        onComplete: () =&gt; {},
+                    });
+                });
+            }
+        }
+    }
+
+    /**
+     *
+     * @param {HTMLElement} element - element which position we should get
+     * @returns {[number, number]} - position of element relative to viewport
+     */
+    getElementPosition(element) {
+        const posX =
+            element.getBoundingClientRect().left -
+            element.closest(this.DOM.hotspotContainer).getBoundingClientRect()
+                .left +
+            element.clientWidth / 2;
+
+        const posY =
+            element.getBoundingClientRect().top -
+            element.closest(this.DOM.hotspotContainer).getBoundingClientRect()
+                .top +
+            element.clientHeight / 2;
+
+        return [posX, posY];
+    }
+
+    /**
+     *
+     * @param {string} from - color in hex format
+     * @param {string} to - color in hex format
+     * @returns {PIXI.Texture}
+     */
+    createGradientTexture(from, to) {
+        const textureWH = 600;
+        const canvas = document.createElement(&quot;canvas&quot;);
+        const context = canvas.getContext(&quot;2d&quot;);
+        const gradient = context.createLinearGradient(
+            0,
+            0,
+            textureWH,
+            textureWH,
+        );
+        gradient.addColorStop(0, from);
+        gradient.addColorStop(1, to);
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, textureWH, textureWH);
+
+        return new PIXI.Texture.from(canvas);
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
