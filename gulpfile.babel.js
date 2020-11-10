@@ -128,7 +128,7 @@ export function reload(done) {
  */
 export function serve(done) {
     server.init({
-        proxy: "www.private.loc/pixi.js-playground",
+        proxy: "www.work.loc/bornfight-redesign-prototypes",
         port: 3000,
         host: "localhost",
     });

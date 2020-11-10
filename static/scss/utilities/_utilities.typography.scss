@@ -1,14 +1,14 @@
 .u-a7 {
-    font-family: $font-primary;
+    font-family: $font-secondary;
     margin-bottom: 0.6em;
     $font-size: (
-        $breakpoint-sm: 24px,
-        $breakpoint-xl: 42px,
+        $breakpoint-sm: 38px,
+        $breakpoint-xl: 76px,
     );
     @include poly-fluid-sizing("font-size", $font-size);
     $line-height: (
-        $breakpoint-sm: 32px,
-        $breakpoint-xl: 44px,
+        $breakpoint-sm: 36px,
+        $breakpoint-xl: 72px,
     );
     @include poly-fluid-sizing("line-height", $line-height);
     letter-spacing: 2px;
@@ -23,13 +23,13 @@
     font-family: $font-primary;
     margin-bottom: 0;
     $font-size: (
-        $breakpoint-sm: 16px,
-        $breakpoint-xl: 26px,
+        $breakpoint-sm: 20px,
+        $breakpoint-xl: 40px,
     );
     @include poly-fluid-sizing("font-size", $font-size);
     $line-height: (
-        $breakpoint-sm: 20px,
-        $breakpoint-xl: 34px,
+        $breakpoint-sm: 22px,
+        $breakpoint-xl: 44px,
     );
     @include poly-fluid-sizing("line-height", $line-height);
     letter-spacing: 2px;

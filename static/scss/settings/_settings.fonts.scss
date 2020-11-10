@@ -1,12 +1,15 @@
 /**
- * Hanken Grotesk
+ * Inter — google font alternative for Plain
  */
-@include font-face("RobotoMono-Regular", "RobotoMono-Regular");
+@include font-face("Inter-Regular", "Inter-Regular");
+@include font-face("Inter-Bold", "Inter-Bold");
 
 /**
  * Font variables
  */
-$roboto-mono: "RobotoMono-Regular", sans-serif;
+$inter-regular: "Inter-Regular", sans-serif;
+$inter-bold: "Inter-Bold", sans-serif;
 $base-size: 18;
 $base-line-height: 26;
-$font-primary: $roboto-mono;
+$font-primary: $inter-regular;
+$font-secondary: $inter-bold;

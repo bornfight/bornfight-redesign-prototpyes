@@ -1,2 +1,7 @@
 .c-header {
+    &--home {
+        min-height: 100vh;
+        padding-top: 5vh;
+        padding-bottom: 5vh;
+    }
 }
